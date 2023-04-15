@@ -18,7 +18,7 @@
 	<link rel="shortcut icon" href="./images/logo.png"/>
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<title>Accueil</title>
+	<title>Recherche via paroles</title>
 	<style>
 		aside {
 	  	width: 20%;
@@ -39,52 +39,29 @@
         	 	<li><img src="./images/logo.png" style="width:17%; height:17%;" alt="logo"></li> 
            		<li><a href="index.php">Accueil</a></li>  
            		<li><a href="genre.php">Genres musicaux</a></li>
-           		<li><a href="rechViaParoles.php">Recherche via les paroles</a></li>
+           		<li><a href="partie1.php">Recherche via les paroles</a></li>
            		<li><a href="propos.php">À propos</a></li>  
            		<li><a href="partie1.php">Image du jour</a></li>
           
 
            		</ul>
       	 </nav>
-      	<form style="margin-left:70%; margin-top:-1.8%;" action ="rech.php" method = "post">
-  			<input type = "search" name = "mot"  placeholder="Artiste ou album..."/>
-
-  			<input type = "submit" value = "Rechercher"/>
-
+      	
    		</form>
   	</header>
 
 <main>
-
+	<article style="margin-left:5%;">
+			<h2 style="margin-top: 15%;">Vous avez oublié le nom d'un titre ou d'un artiste ?</h2> 
+			<h2>Mais vous avez toujours les paroles en tête ! </h2>
+			<h2>Cet endroit est dédié pour vous </h2>
+				<form style="margin-left: 60%; margin-top: -5%;" action ="resultRechViaParoles.php" method = "post">
+  			<input type = "search" name = "mot"  placeholder="Paroles..."/>
+  			<input type = "submit" value = "Rechercher"/>
+	</article>
 	
-	
-     	    <?php 
-            echo image();
-          ?>
-	<aside>
-		<h2 style="margin-bottom: 4%;">Top titres du moment</h2>
-      <?php 
-        echo top_music();
-      ?>
-	</aside>
 </main>
 
-
-<footer style="text-align:center;background: rgba(250, 250, 250, 0.8); margin-top: 8%;">
-        <?php
-        	echo visit();
-        ?>
-		<p style="text-align: center;">Site créé par Samy & Bryan & Milan ©2023     |
-      <span><a  style="color: black;" href="mailto:Music_SM@gmail.com">Contactez-nous </a></span>   
-        <a style="text-align: center; color: black;" >| Votre navigateur est: <?php 
-        echo get_navigateur(); ?>
-      </span>
-        
-
-    </p>
-
-		
-</footer>
 </body>
 
 </html>

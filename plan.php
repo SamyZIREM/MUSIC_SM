@@ -48,8 +48,8 @@ $style="fond.jpg";
         		<li><img src="./images/logo.png" style="width:17%; height:17%;" alt="logo"></li> 
            		<li><a href="index.php">Accueil</a></li>  
            		<li><a href="genre.php">Genres musicaux</a></li>
-           		<li><a href="propos.php">À propos</a></li> 
-           		<li><a href="statistique.php">Statistique</a></li>  
+           			<li><a href="rechViaParoles.php">Recherche via les paroles</a></li>
+           		<li><a href="propos.php">À propos</a></li>  
            		<li><a href="partie1.php">Image du jour</a></li> 
 
       		</ul>

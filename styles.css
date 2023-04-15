@@ -11,14 +11,14 @@ body{
 	background-position: center;
 	background-attachment: fixed;
 	background-repeat: no-repeat;
-	/*background-image: url(images/fond.jpg);*/
+
 }
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  /*background-color: rgba;*/
+
 
  
   
@@ -39,10 +39,6 @@ li a {
 
 }
 
-
-
-
-/* Change the link color to #111 (black) on hover */
 li a:hover {
   background-color: white;
 }
@@ -61,5 +57,13 @@ li a:hover {
       gap: 10px 2em;
       margin-left: 15%;
       margin-top: 3%;
-    }
 
+}
+
+
+
+
+.container {
+      display: flex;
+      justify-content: center;
+}

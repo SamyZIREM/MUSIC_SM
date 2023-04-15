@@ -5,33 +5,7 @@ require "./include/functions.inc.php";
 //style par defaut
 if (empty($_POST['sombre'])&&empty($_POST['clair'])) {     
   $style="fond.jpg";
-             }
-
-
-
-//clair vers style sombre
-
-if (!empty($_POST['sombre'])) {
-$style="fond_nuit.jpg"; 
-setcookie('theme','sombre',time() + 60 * 60 * 48 );
 }
-if($_COOKIE['theme']=='sombre'){
-$style="fond_nuit.jpg"; 
-} 
-
-
-//style clair
-if (!empty($_POST['clair'])) {    
-$style="fond.jpg";    
-setcookie('theme','clair',time() + 60 * 60 * 48 );  
-}
-if($_COOKIE['theme']=='clair'){
-$style="fond.jpg";  
-}
-
-
-
-
 ?>
 <!DOCTYPE html>
 
@@ -50,14 +24,14 @@ $style="fond.jpg";
             <li><img src="./images/logo.png" style="width:17%; height:17%;" alt="logo"></li> 
               <li><a href="index.php">Accueil</a></li>  
               <li><a href="genre.php">Genres musicaux</a></li>
+              <li><a href="rechViaParoles.php">Recherche via les paroles</a></li>
               <li><a href="propos.php">À propos</a></li> 
-              <li><a href="statistique.php">Statistique</a></li>  
               <li><a href="partie1.php">Image du jour</a></li> 
 
            </ul>
          </nav>
-         <form style="margin-left:70%; margin-top:-2%;" action = "rech.php" method = "post">
-      <input type = "search" name = "mot">
+         <form style="margin-left:70%; margin-top:-1.8%;" action = "rech.php" method = "post">
+      <input type = "search" name = "mot" placeholder="Artiste ou album...">
       <input type = "submit" value = "Rechercher">
 
       </form>
@@ -68,7 +42,7 @@ $style="fond.jpg";
 
 <main>
 <section style="margin-top:5%;">
-  <h2 style="text-align:center; background: rgba(250, 250, 250, 0.95); border-radius: 10%; margin-bottom: 2%; ">Image du jour et localisation</h2>
+
   <article class="art" style="text-align: center;">
     <h2>Image du jour (NASA)</h2>
     <?php
@@ -86,15 +60,16 @@ $style="fond.jpg";
 </main>
 <footer style="text-align:center;background: rgba(250, 250, 250, 0.8); margin-top: 8%;">
         <?php
-        echo visit();
+          echo visit();
         ?>
-    <p style="text-align: center;">Site créé par Samy et Mélissa ©2022     |
-        <span><a  style="color: black;" href="mailto:Music_SM@gmail.com">Contactez-nous </a></span>   
-        <a style="text-align: center; color: black;" href="plan.php"> | Plan du site</a><span>| Votre navigateur est: <?php 
-        echo get_navigateur(); ?></span>
+    <p style="text-align: center;">Site créé par Samy & Bryan & Milan ©2023     |
+      <span><a  style="color: black;" href="mailto:Music_SM@gmail.com">Contactez-nous </a></span>   
+        <a style="text-align: center; color: black;" >| Votre navigateur est: <?php 
+        echo get_navigateur(); ?>
+      </span>
         
 
-        </p>
+    </p>
 
     
 </footer>

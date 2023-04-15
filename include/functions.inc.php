@@ -1,3 +1,4 @@
+
 <?php
         /**
          * Partie 1 du projet pour afficher la photo du jour NASA
@@ -40,28 +41,69 @@
          * Usage de l'API theaudiodb
         */
         function biographie(){
-        if (isset($_POST['mot'])) {
-        setcookie('lastResearch',$_POST['mot']);
-        $mot = ($_POST['mot']);
-        $url ="https://www.theaudiodb.com/api/v1/json/2/search.php?s=$mot";
-        $json=file_get_contents($url);
-        $tt = json_decode($json,true);
+        // if (isset($_POST['mot'])) {
+        // setcookie('lastResearch',$_POST['mot']);
+        // $mot = ($_POST['mot']);
+        // $url ="https://www.theaudiodb.com/api/v1/json/2/search.php?s=$mot";
+        // $json=file_get_contents($url);
+        // $tt = json_decode($json,true);
         
-        if(!empty($tt['artists'])){
-        echo"<article class='art' style='margin-top: 5%; padding-bottom: 1%;'>";
-        echo"<h2 style='text-align:center;'>Biographie</h2>";
-        echo "<p style='text-align:center; margin-top:2%;'> ".$tt['artists']['0']['strArtist']."</p>";
+        // if(!empty($tt['artists'])){
+        // echo"<article class='art' style='margin-top: 5%; padding-bottom: 1%;'>";
+        // echo"<h2 style='text-align:center;'>Biographie</h2>";
+        // echo "<p style='text-align:center; margin-top:2%;'> ".$tt['artists']['0']['strArtist']."</p>";
 
-        echo "<p style='text-align:center;'> Genre: ".$tt['artists']['0']['strGenre']."</p>";
-        echo "<img alt='bio'  src='".$tt['artists']['0']['strArtistThumb']."' style='width:10%; margin-left:45%;'/>";
-        echo "<p style=' text-align: justify; margin-left:3%; margin-right:3%; margin-bottom:2%;'> ".$tt['artists']['0']['strBiographyFR']."</p>";
-        }
-        }
-        }
+        // echo "<p style='text-align:center;'> Genre: ".$tt['artists']['0']['strGenre']."</p>";
+        // echo "<img alt='bio'  src='".$tt['artists']['0']['strArtistThumb']."' style='width:10%; margin-left:45%;'/>";
+        // echo "<p style=' text-align: justify; margin-left:3%; margin-right:3%; margin-bottom:2%;'> ".$tt['artists']['0']['strBiographyFR']."</p>";
+        // }
+        // }
+// Récupération des données de l'artiste et des albums
+
+// Récupération des données de l'artiste et des albums
+$artistName = ($_POST['mot']);
+$artistUrl = "https://api.deezer.com/search/artist?q=" . urlencode($artistName);
+$artistData = json_decode(file_get_contents($artistUrl));
+$artistId = $artistData->data[0]->id;
+
+$albumsUrl = "https://api.deezer.com/artist/{$artistId}/albums";
+$albumsData = json_decode(file_get_contents($albumsUrl));
+
+// Récupération des extraits pour chaque piste
+$tracks = array();
+foreach ($albumsData->data as $album) {
+  $albumUrl = "https://api.deezer.com/album/{$album->id}";
+  $albumData = json_decode(file_get_contents($albumUrl));
+
+  foreach ($albumData->tracks->data as $track) {
+    $trackUrl = $track->preview;
+    $tracks[] = array(
+      'title' => $track->title,
+      'audio_url' => $trackUrl
+    );
+  }
+}
+
+// Affichage des extraits de chaque piste
+echo '<div style="white-space: nowrap; overflow-x: auto; margin-left:10%; margin-top:2%;">';
+foreach ($tracks as $track) {
+  echo '<div style="display: inline-block; margin-right: 10px;"><p>' . $track['title'] . '</p><audio controls><source src="' . $track['audio_url'] . '" type="audio/mpeg"></audio></div>';
+}
+echo '</div>';
+
+}
 ?>
 
 
 <?php
+
+                
+
+
+
+
+
+
         /**
          * Fonction qui renvoit les titres connus d'un artiste ou d'une musique recherchée
          * Usage de l'API Deezer 
@@ -241,31 +283,6 @@
         echo "<img src='$images[$i]' alt='icon' style='margin-top:14.3%; margin-left:5%; height: 30%; width: 30%;'/>";
         }
 ?>
-
-
-
-<?php
-        /**
-         * Fonction qui renvoit à la biographie d'un artiste lorsqu'on appuie sur son image une fois choisi le genre musical souhaité
-         * Usage de l'API theaudiodb sous flux JSON
-        */ 
-        function biographie2($key){ 
-        $url ="https://www.theaudiodb.com/api/v1/json/2/search.php?s=$key";
-        $json=file_get_contents($url);
-        $tt = json_decode($json,true);
-        if(!empty($tt['artists'])){
-                echo"<article class='art' style='margin-top: 5%; padding-bottom: 1%;'>";
-                echo"<h2 style='text-align:center;'>Biographie</h2>";
-                echo "<p style='text-align:center;'> ".$tt['artists']['0']['strArtist']."</p>";
-                echo "<p style='text-align:center;'> Genre: ".$tt['artists']['0']['strGenre']."</p>";
-                echo "<img alt='bio' src='".$tt['artists']['0']['strArtistThumb']."' style='width:10%; margin-left:45%;'/>";
-                echo "<p style=' text-align: justify; margin-left:3%; margin-right:3%; margin-bottom:2%;'> ".$tt['artists']['0']['strBiographyFR']."</p>";
-                echo"</article>";
-        }
-        }
-?>
-
-
 <?php
         /**
          * Fonction qui renvoit aux titres d'un artiste lorsqu'on appuie sur son image une fois choisi le genre musical souhaité
@@ -415,5 +432,61 @@
         }
         return $ub;
         }
+
+?>
+
+
+<?php
+// function getSongTitleFromLyrics($lyrics, $apikey) {
+// $url = "https://api.musixmatch.com/ws/1.1/track.search?q_lyrics=".urlencode($lyrics)."&apikey=".$apikey;
+//   $json = file_get_contents($url);
+//   $result = json_decode($json, true);
+//   $track_list = $result['message']['body']['track_list'];
+//   if(!empty($track_list)){
+//     $track = $track_list[0]['track'];
+//     return $track['track_name'];
+//   }else{
+//     return "Aucun titre trouvé";
+//   }
+// }
+
+// if(isset($_POST['mot'])){
+//   $lyrics = $_POST['mot'];
+// }else{
+//   $lyrics = "";
+// }
+// $apikey = "3fa0982852a98331dff1ac3dc0cadeb7";
+// if(!empty($lyrics)){
+//   $song_title = getSongTitleFromLyrics($lyrics, $apikey);
+// }else{
+//   $song_title = "";
+// }
+
+
+
+function searchTracksByLyrics($apikey, $q) {
+    $url = "https://api.musixmatch.com/ws/1.1/track.search?q_lyrics=".urlencode($q)."&apikey=".$apikey."&s_track_rating=desc";
+    $response = file_get_contents($url);
+    $json = json_decode($response, true);
+
+    if(isset($json['message']['body']['track_list'])) {
+        return $json['message']['body']['track_list'];
+    } else {
+        return null;
+    }
+}
+
+function getTrackSnippet($apikey, $trackid) {
+    $url = "https://api.musixmatch.com/ws/1.1/track.snippet.get?track_id=".$trackid."&apikey=".$apikey;
+    $response = file_get_contents($url);
+    $json = json_decode($response, true);
+
+    if(isset($json['message']['body']['snippet'])) {
+        return $json['message']['body']['snippet']['snippet_body'];
+    } else {
+        return null;
+    }
+}
+
 
 ?>

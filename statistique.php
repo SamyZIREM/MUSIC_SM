@@ -5,26 +5,6 @@
 	if (empty($_POST['sombre'])&&empty($_POST['clair'])) {     
 		$style="fond.jpg";
 	}
-
-	//clair vers style sombre
-
-	if (!empty($_POST['sombre'])) {
-	$style="fond_nuit.jpg";	
-	setcookie('theme','sombre',time() + 60 * 60 * 48 );
-	}
-	if($_COOKIE['theme']=='sombre'){
-		$style="fond_nuit.jpg";	
-	}	
-
-
-	//style clair
-	if (!empty($_POST['clair'])) {		
-		$style="fond.jpg";		
-		setcookie('theme','clair',time() + 60 * 60 * 48 );	
-	}
-	if($_COOKIE['theme']=='clair'){
-		$style="fond.jpg";	
-	}
 ?>
 <!DOCTYPE html>
 
@@ -63,7 +43,7 @@
       		
       	 </nav>
       	<form style="margin-left:70%; margin-top:-1.8%;" action ="rech.php" method = "post">
-  			<input type = "search" name = "mot"/>
+  			<input type = "search" name = "mot" placeholder="Artiste ou album..."/>
 
   			<input type = "submit" value = "Rechercher"/>
 
@@ -84,26 +64,11 @@
 		if($art!='aucun'){
 	      $as= str_replace(' ','&nbsp;',$art);
 
-	      echo "<h2 style='margin-left:35%;'> Dernier artiste ou titre consulté :$as </h2>";
+	      echo "<h2 style='text-align:center;'> Dernier artiste ou titre consulté dans les genres musicaux:$as </h2>";
 	    }
 	?>
-
-
-   
-                    
-                 <h2 style="margin-top:5%; text-align: center;">Histogramme:</h2>
-                <?php 
-                echo "<img style='margin-left:15%;' src='histogramme.php' alt='histogram' />";
-                ?>
-<h2 style="margin-top:3%; text-align:center;">Fonctionnement de l'histogramme:</h2>
-<p style="margin-left:10%; text-align:justify;margin-right: 4%;">Lorsqu'on on va consulter un artiste quelconque aprés avoir choisi le genre musical, on observera alors cette consultation dans l'histogramme. En effet, on verra le nombre de fois qu'on a consulté l'artiste avec son nom répété au même nombres de consultations et le nombre maximal de consultations pour un artiste quelconque on l'observe grâce au baton le plus grand correspondant à son nom.</p>
-       </article>
-	
-
-
-</main>
-
-
+		
+	</article>
 <footer style="text-align:center;background: rgba(250, 250, 250, 0.8); margin-top: 8%;">
         <?php
         	echo visit();
